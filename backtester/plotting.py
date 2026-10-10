@@ -8,6 +8,10 @@ from matplotlib.figure import Figure
 
 from .metrics import drawdown_series
 
+# Same colours in every chart, so "Strategy" and "Buy & hold" are easy to tell apart.
+STRATEGY_COLOR = "tab:blue"
+BENCHMARK_COLOR = "tab:orange"
+
 
 def _figure_and_axes(ax, figsize=(10, 4)):
     if ax is None:
@@ -19,8 +23,8 @@ def _figure_and_axes(ax, figsize=(10, 4)):
 def plot_equity(result, ax=None) -> Figure:
     """Portfolio value over time: strategy vs buy-and-hold."""
     fig, ax = _figure_and_axes(ax)
-    ax.plot(result.equity.index, result.equity, label="Strategy")
-    ax.plot(result.benchmark_equity.index, result.benchmark_equity, label="Buy & hold", alpha=0.7)
+    ax.plot(result.equity.index, result.equity, label="Strategy", color=STRATEGY_COLOR)
+    ax.plot(result.benchmark_equity.index, result.benchmark_equity, label="Buy & hold", color=BENCHMARK_COLOR, alpha=0.7)
     ax.set_title("Portfolio value")
     ax.set_ylabel("$")
     ax.legend()
@@ -33,8 +37,8 @@ def plot_drawdown(result, ax=None) -> Figure:
     fig, ax = _figure_and_axes(ax)
     strategy = drawdown_series(result.equity) * 100
     benchmark = drawdown_series(result.benchmark_equity) * 100
-    ax.fill_between(strategy.index, strategy, 0, alpha=0.4, label="Strategy")
-    ax.plot(benchmark.index, benchmark, label="Buy & hold", alpha=0.7)
+    ax.fill_between(strategy.index, strategy, 0, alpha=0.4, label="Strategy", color=STRATEGY_COLOR)
+    ax.plot(benchmark.index, benchmark, label="Buy & hold", color=BENCHMARK_COLOR, alpha=0.7)
     ax.set_title("Drawdown (% below previous peak)")
     ax.set_ylabel("%")
     ax.legend()

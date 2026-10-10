@@ -1,4 +1,5 @@
 import pandas as pd
+from matplotlib.colors import to_hex
 from matplotlib.figure import Figure
 
 from backtester import run_backtest
@@ -31,3 +32,14 @@ def test_plot_signals_draws_overlays_and_trade_markers(make_prices):
     ax = fig.axes[0]
     assert len(ax.get_lines()) == 2  # close + overlay
     assert len(ax.collections) == 2  # entry markers + exit markers
+
+
+def test_strategy_and_benchmark_keep_their_colours_across_charts(make_prices):
+    _, result = make_result(make_prices, [0, 1, 1, 0, 0])
+    equity_ax, drawdown_ax = plot_result(result).axes
+    strategy_line, benchmark_line = equity_ax.get_lines()
+    strategy_fill = drawdown_ax.collections[0]
+    (drawdown_benchmark_line,) = drawdown_ax.get_lines()
+    assert drawdown_benchmark_line.get_color() == benchmark_line.get_color()
+    assert to_hex(strategy_fill.get_facecolor()[0]) == to_hex(strategy_line.get_color())
+    assert strategy_line.get_color() != benchmark_line.get_color()
