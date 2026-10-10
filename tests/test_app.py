@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 
 from streamlit.testing.v1 import AppTest
@@ -38,3 +39,14 @@ def test_one_day_range_shows_warning():
     at.sidebar.date_input[0].set_value((last_day, last_day)).run()
     assert not at.exception
     assert len(at.warning) == 1
+
+
+def test_short_window_warns_that_annualised_numbers_are_unreliable():
+    at = run_app()
+    last_day = at.sidebar.date_input[0].value[1]
+    at.sidebar.date_input[0].set_value((last_day - datetime.timedelta(days=14), last_day)).run()
+    assert not at.exception
+    assert len(at.metric) == 4
+    assert any("annualised" in caption.value for caption in at.caption)
+    full = run_app()
+    assert not any("annualised" in caption.value for caption in full.caption)

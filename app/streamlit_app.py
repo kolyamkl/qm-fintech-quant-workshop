@@ -76,6 +76,11 @@ strategy_metrics = format_metrics(result.metrics)
 benchmark_metrics = format_metrics(result.benchmark_metrics)
 for column, name in zip(st.columns(4), ["Total return", "Annual return (CAGR)", "Sharpe ratio", "Max drawdown"]):
     column.metric(name, strategy_metrics[name], f"Buy & hold: {benchmark_metrics[name]}", delta_color="off")
+if len(prices) < 63:  # about 3 months of trading days
+    st.caption(
+        "⚠️ This window is shorter than about 3 months, so the annualised figures (CAGR, Sharpe) "
+        "are unreliable: a few lucky days get scaled up to a whole year."
+    )
 
 st.subheader(f"{ticker}: price and trades")
 st.pyplot(plot_signals(prices, result, overlays={k: v.loc[window] for k, v in overlays.items()}))
@@ -87,4 +92,24 @@ left, right = st.columns(2)
 left.subheader("Strategy vs buy & hold")
 left.dataframe(result.summary())
 right.subheader(f"Trades ({len(result.trades)})")
-right.dataframe(result.trades)
+trades_table = result.trades.copy()
+for column in ["entry_date", "exit_date"]:
+    trades_table[column] = pd.to_datetime(trades_table[column]).dt.date  # drop the 00:00:00
+trades_table["return"] = trades_table["return"] * 100  # 0.12 -> 12, shown as "12.0%"
+right.dataframe(
+    trades_table,
+    hide_index=True,
+    column_config={
+        "entry_date": st.column_config.DateColumn("Entry", format="YYYY-MM-DD"),
+        "exit_date": st.column_config.DateColumn("Exit", format="YYYY-MM-DD"),
+        "direction": "Direction",
+        "entry_price": st.column_config.NumberColumn("Entry price", format="%.2f"),
+        "exit_price": st.column_config.NumberColumn("Exit price", format="%.2f"),
+        "return": st.column_config.NumberColumn("Return", format="%.1f%%"),
+        "open": st.column_config.CheckboxColumn("Still open"),
+    },
+)
+right.caption(
+    "Prices are closes on the signal day; returns are before costs. "
+    "\"Still open\" means the position was still held when the data ended — it is valued at the last close."
+)
