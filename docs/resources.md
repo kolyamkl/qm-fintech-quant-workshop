@@ -28,8 +28,9 @@ Roughly easy → hard. Each builds on the code in this repo.
 
 **Extend the engine**
 10. Add **slippage** (e.g. a fixed extra cost per trade) to `run_backtest`.
-11. Add **position sizing**: allow positions between 0 and 1 (e.g. 0.5 = half invested).
-12. Make a **multi-asset** backtest: hold the 3 sector ETFs with the best 6-month return, rebalanced monthly.
+11. Add a **borrowing fee** for short positions (e.g. 1% a year, charged for every day you hold `-1`). Short sellers pay this in real life.
+12. Add **position sizing**: allow positions between 0 and 1 (e.g. 0.5 = half invested).
+13. Make a **multi-asset** backtest: hold the 3 sector ETFs with the best 6-month return, rebalanced monthly.
 
 ---
 
