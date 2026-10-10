@@ -77,7 +77,7 @@ def test_positions_are_aligned_to_price_dates(make_prices):
 
 def test_invalid_position_values_raise(make_prices):
     prices = make_prices([100, 101, 102])
-    with pytest.raises(ValueError, match="-1, 0 or 1"):
+    with pytest.raises(ValueError, match=r"-1, 0 or 1 — found \[2\.0\]"):
         run_backtest(prices, series([0, 2, 1], prices))
 
 

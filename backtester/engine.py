@@ -63,7 +63,7 @@ def run_backtest(
     signal = positions.reindex(close.index).astype(float).fillna(0.0)
     allowed = signal.isin([-1.0, 0.0, 1.0])
     if not allowed.all():
-        bad = sorted(signal[~allowed].unique())[:5]
+        bad = sorted(signal[~allowed].unique().tolist())[:5]  # plain floats, so the message reads "[2.0]"
         raise ValueError(f"Positions must be -1, 0 or 1 — found {bad}.")
 
     # 2. THE MOST IMPORTANT LINE IN THIS REPO.
