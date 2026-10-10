@@ -1,5 +1,6 @@
 import math
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -75,6 +76,28 @@ def test_positions_are_aligned_to_price_dates(make_prices):
     assert len(result.equity) == 3
 
 
+def test_numpy_array_or_list_positions_are_matched_by_row(make_prices):
+    prices = make_prices([100, 101, 102, 103])
+    expected = run_backtest(prices, series([0, 1, 1, 1], prices)).equity.tolist()
+    assert run_backtest(prices, np.array([0, 1, 1, 1])).equity.tolist() == pytest.approx(expected)
+    assert run_backtest(prices, [0, 1, 1, 1]).equity.tolist() == pytest.approx(expected)
+    with pytest.raises(ValueError, match="3 positions for 4 days"):
+        run_backtest(prices, [0, 1, 1])
+
+
+def test_dataframe_positions_raise_a_clear_type_error(make_prices):
+    prices = make_prices([100, 101, 102])
+    with pytest.raises(TypeError, match="not a DataFrame"):
+        run_backtest(prices, pd.DataFrame({"position": [0, 1, 1]}, index=prices.index))
+
+
+def test_positions_with_no_matching_dates_raise(make_prices):
+    prices = make_prices([100, 101, 102])
+    # e.g. pd.Series(np.where(...)) — numbered 0, 1, 2 instead of dated, so nothing lines up
+    with pytest.raises(ValueError, match="dates don't match"):
+        run_backtest(prices, pd.Series([0, 1, 1]))
+
+
 def test_invalid_position_values_raise(make_prices):
     prices = make_prices([100, 101, 102])
     with pytest.raises(ValueError, match=r"-1, 0 or 1 — found \[2\.0\]"):
@@ -96,6 +119,7 @@ def test_trades_are_listed_with_returns(make_prices):
     assert trades["exit_price"].tolist() == [15, 12]
     assert trades["return"].tolist() == pytest.approx([0.5, 0.2])
     assert trades["entry_date"].tolist() == [prices.index[1], prices.index[4]]
+    assert trades["open"].tolist() == [False, False]
 
 
 def test_open_trade_is_closed_on_last_day(make_prices):
@@ -104,6 +128,7 @@ def test_open_trade_is_closed_on_last_day(make_prices):
     assert len(result.trades) == 1
     assert result.trades["exit_date"].iloc[0] == prices.index[-1]
     assert result.trades["return"].iloc[0] == pytest.approx(0.2)
+    assert result.trades["open"].tolist() == [True]  # closed only because the data ended
 
 
 def test_summary_compares_strategy_and_benchmark(make_prices):

@@ -59,6 +59,8 @@ def plot_result(result) -> Figure:
 def plot_signals(prices, result, overlays=None, ax=None) -> Figure:
     """Price with optional indicator lines and markers where trades opened (▲) and closed (▼).
 
+    A trade still open when the data ends gets no ▼ — it was never actually closed.
+
     overlays: dict of label -> Series, e.g. {"50-day MA": close.rolling(50).mean()}
     """
     fig, ax = _figure_and_axes(ax, figsize=(10, 5))
@@ -67,8 +69,9 @@ def plot_signals(prices, result, overlays=None, ax=None) -> Figure:
         ax.plot(line.index, line, label=label, linewidth=1.2)
 
     trades = result.trades
+    closed = trades[~trades["open"].astype(bool)]
     ax.scatter(trades["entry_date"], trades["entry_price"], marker="^", s=70, color="tab:green", label="Enter", zorder=3)
-    ax.scatter(trades["exit_date"], trades["exit_price"], marker="v", s=70, color="tab:red", label="Exit", zorder=3)
+    ax.scatter(closed["exit_date"], closed["exit_price"], marker="v", s=70, color="tab:red", label="Exit", zorder=3)
     ax.set_title("Price and trades")
     ax.legend()
     ax.grid(alpha=0.3)

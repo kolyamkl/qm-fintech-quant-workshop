@@ -43,3 +43,10 @@ def test_strategy_and_benchmark_keep_their_colours_across_charts(make_prices):
     assert drawdown_benchmark_line.get_color() == benchmark_line.get_color()
     assert to_hex(strategy_fill.get_facecolor()[0]) == to_hex(strategy_line.get_color())
     assert strategy_line.get_color() != benchmark_line.get_color()
+
+
+def test_trade_still_open_at_the_end_gets_no_exit_marker(make_prices):
+    prices, result = make_result(make_prices, [0, 1, 1, 1, 1])
+    entries, exits = plot_signals(prices, result).axes[0].collections
+    assert len(entries.get_offsets()) == 1
+    assert len(exits.get_offsets()) == 0

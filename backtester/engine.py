@@ -10,7 +10,7 @@ import pandas as pd
 
 from .metrics import compute_metrics, format_metrics
 
-TRADE_COLUMNS = ["entry_date", "exit_date", "direction", "entry_price", "exit_price", "return"]
+TRADE_COLUMNS = ["entry_date", "exit_date", "direction", "entry_price", "exit_price", "return", "open"]
 
 
 @dataclass
@@ -49,6 +49,7 @@ def run_backtest(
     prices:     DataFrame with a "Close" column, indexed by date (e.g. from load_prices).
     positions:  Series of 1 (long), 0 (cash) or -1 (short) — one value per day, decided
                 using information available at that day's close. NaN counts as 0.
+                A plain list or numpy array also works if it has one value per price row.
     cost_bps:   trading cost in basis points (1 bp = 0.01%), charged on every position change.
     start_cash: starting portfolio value.
 
@@ -60,7 +61,7 @@ def run_backtest(
         raise ValueError("Need at least 2 days of prices to run a backtest — check your date range.")
 
     # 1. Line positions up with the price dates. Missing or NaN days mean "no position".
-    signal = positions.reindex(close.index).astype(float).fillna(0.0)
+    signal = _align_positions(positions, close)
     allowed = signal.isin([-1.0, 0.0, 1.0])
     if not allowed.all():
         bad = sorted(signal[~allowed].unique().tolist())[:5]  # plain floats, so the message reads "[2.0]"
@@ -102,12 +103,33 @@ def run_backtest(
     )
 
 
+def _align_positions(positions, close: pd.Series) -> pd.Series:
+    """Put the strategy's positions on the same dates as the prices, as floats.
+
+    A Series is matched to the prices by date, so positions computed on the full history
+    still work when the prices are a shorter slice. A list or numpy array is matched by row.
+    """
+    if isinstance(positions, pd.DataFrame):
+        raise TypeError("positions must be a Series (one column), not a DataFrame — e.g. pass df['position'].")
+    if not isinstance(positions, pd.Series):
+        if len(positions) != len(close):
+            raise ValueError(f"Got {len(positions)} positions for {len(close)} days of prices — they must match.")
+        positions = pd.Series(positions, index=close.index)
+    elif not positions.index.isin(close.index).any():
+        raise ValueError(
+            "The positions' dates don't match the price dates — build positions from the same "
+            "prices DataFrame, e.g. my_strategy(prices), so they share its date index."
+        )
+    return positions.reindex(close.index).astype(float).fillna(0.0)
+
+
 def _extract_trades(signal: pd.Series, close: pd.Series) -> pd.DataFrame:
     """List every round trip: when we got in, when we got out, and what it returned.
 
     Trades are priced at the close of the day the signal changed — the same moment
     run_backtest assumes we trade. Returns here are before costs.
-    A trade still open on the last day is closed at the last close.
+    A trade still open on the last day is closed at the last close and marked open=True:
+    the data ended, not the strategy.
     """
     rows = []
     current, entry_date = 0.0, None
@@ -115,16 +137,16 @@ def _extract_trades(signal: pd.Series, close: pd.Series) -> pd.DataFrame:
         if position == current:
             continue
         if current != 0:
-            rows.append(_trade_row(entry_date, date, current, close))
+            rows.append(_trade_row(entry_date, date, current, close, still_open=False))
         current, entry_date = position, date
 
     last_date = signal.index[-1]
     if current != 0 and entry_date != last_date:
-        rows.append(_trade_row(entry_date, last_date, current, close))
+        rows.append(_trade_row(entry_date, last_date, current, close, still_open=True))
     return pd.DataFrame(rows, columns=TRADE_COLUMNS)
 
 
-def _trade_row(entry_date, exit_date, direction: float, close: pd.Series) -> dict:
+def _trade_row(entry_date, exit_date, direction: float, close: pd.Series, still_open: bool) -> dict:
     entry_price, exit_price = close.loc[entry_date], close.loc[exit_date]
     return {
         "entry_date": entry_date,
@@ -133,4 +155,5 @@ def _trade_row(entry_date, exit_date, direction: float, close: pd.Series) -> dic
         "entry_price": entry_price,
         "exit_price": exit_price,
         "return": direction * (exit_price / entry_price - 1),
+        "open": still_open,  # True = still held when the data ended
     }
