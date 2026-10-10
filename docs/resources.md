@@ -55,7 +55,6 @@ Roughly easy → hard. Each builds on the code in this repo.
 - Jake VanderPlas — *Python Data Science Handbook* (free online): <https://jakevdp.github.io/PythonDataScienceHandbook/>
 - pandas — *10 minutes to pandas*: <https://pandas.pydata.org/docs/user_guide/10min.html>
 - Khan Academy — Statistics and probability: <https://www.khanacademy.org/math/statistics-probability>
-- QuantStart articles: <https://www.quantstart.com/articles/>
 - QuantConnect documentation (a free backtesting platform): <https://www.quantconnect.com/docs>
 - backtesting.py documentation: <https://kernc.github.io/backtesting.py/>
 
