@@ -93,7 +93,15 @@ tests/                 checks that the engine computes correctly (run: pytest)
 
 ## How the engine works (in one paragraph)
 
-`run_backtest` takes your daily positions, **shifts them by one day** (a decision made at today's close can only earn tomorrow's return — skipping this is the classic *look-ahead bias*), multiplies by the asset's daily returns, subtracts a trading cost whenever the position changes, and compounds the result from $10,000. Everything is compared with simply buying and holding. It deliberately leaves out slippage, position sizing and multi-asset portfolios — those are exercises in [`docs/resources.md`](docs/resources.md).
+`run_backtest` takes your daily positions, **shifts them by one day** (a decision made at today's close can only earn tomorrow's return — skipping this is the classic *look-ahead bias*), multiplies by the asset's daily returns, subtracts a trading cost whenever the position changes, and compounds the result from $10,000. Everything is compared with simply buying and holding. It deliberately leaves out slippage, borrowing fees for shorts, position sizing and multi-asset portfolios — those are exercises in [`docs/resources.md`](docs/resources.md).
+
+## Deploy the app (organisers)
+
+The hosted app runs on [Streamlit Community Cloud](https://streamlit.io/cloud) (free). With the repo pushed to GitHub:
+
+1. Sign in at [share.streamlit.io](https://share.streamlit.io) with the GitHub account that owns the repo.
+2. Click **New app** and choose repository `kolyamkl/qm-fintech-quant-workshop`, branch `main`, main file path `app/streamlit_app.py`.
+3. Click **Deploy**, then put the app's URL in the "Hosted app" row at the top of this README.
 
 ## Licence
 
