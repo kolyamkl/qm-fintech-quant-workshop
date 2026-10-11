@@ -112,6 +112,8 @@ The hosted app runs on [Streamlit Community Cloud](https://streamlit.io/cloud) (
 2. Click **New app** and choose repository `kolyamkl/qm-fintech-quant-workshop`, branch `main`, main file path `app/streamlit_app.py`.
 3. Click **Deploy**. The live app is at <https://qmfintech-workshop.streamlit.app> and redeploys automatically on every push to `main`.
 
+After a push that changes `backtester/` or `strategies/`, click **Manage app → Reboot app** on the live site. Streamlit reloads `app/` by itself but keeps the old versions of those two folders in memory, so without a reboot the app can crash with an `ImportError`.
+
 ## Licence
 
 Code: [MIT](LICENSE). Data: see [`data/README.md`](data/README.md).
