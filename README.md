@@ -18,7 +18,7 @@ Led by **Adnan Salehin** (Lead SWE & VP, JPMorgan) · Organised by **QM FinTech 
 4. Run the first cell (**▶ Setup**). It downloads the workshop code and data into your Colab session.
 5. Work top to bottom: click a cell and press **Shift + Enter** to run it.
 
-**Just want to play, no code?** Try the 🌐 interactive app: *link coming before the workshop*.
+**Just want to play, no code?** Try the 🌐 interactive app: **[qmfintech-workshop.streamlit.app](https://qmfintech-workshop.streamlit.app)**
 
 ### All notebooks
 
@@ -110,7 +110,7 @@ The hosted app runs on [Streamlit Community Cloud](https://streamlit.io/cloud) (
 
 1. Sign in at [share.streamlit.io](https://share.streamlit.io) with the GitHub account that owns the repo.
 2. Click **New app** and choose repository `kolyamkl/qm-fintech-quant-workshop`, branch `main`, main file path `app/streamlit_app.py`.
-3. Click **Deploy**, then replace "link coming before the workshop" under **Start here** with the app's URL.
+3. Click **Deploy**. The live app is at <https://qmfintech-workshop.streamlit.app> and redeploys automatically on every push to `main`.
 
 ## Licence
 
