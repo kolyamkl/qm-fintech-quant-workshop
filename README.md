@@ -12,6 +12,8 @@ Led by **Adnan Salehin** (Lead SWE & VP, JPMorgan) · Organised by **QM FinTech 
 
 **Nothing to install.** All you need is a Google account for [Google Colab](https://colab.research.google.com), a free notebook service that runs Python in the cloud.
 
+👉 **Workshop page: [kolyamkl.github.io/qm-fintech-quant-workshop](https://kolyamkl.github.io/qm-fintech-quant-workshop/)**: every notebook opens in Colab in a **new tab**. (Buttons on this GitHub page open in the same tab; Cmd/Ctrl-click to open a new one.)
+
 1. Open the main workshop notebook: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/01_workshop_ma_crossover.ipynb)
 2. If Colab warns that the notebook wasn't written by Google, click **Run anyway**.
 3. Click **File → Save a copy in Drive**, so your changes are kept.
@@ -66,6 +68,7 @@ backtester/            the engine: data loading, run_backtest, metrics, charts
 strategies/            ma_crossover, rsi_mean_reversion, and template.py for your own
 notebooks/             the workshop, step by step
 app/streamlit_app.py   interactive backtester
+docs/index.html        the workshop page (GitHub Pages)
 docs/glossary.md       every term, explained in a sentence
 docs/resources.md      exercises, reading list, careers and interview prep
 scripts/download_data.py   rebuilds data/prices.csv from Yahoo Finance

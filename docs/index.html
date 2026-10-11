@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QM FinTech Quant Workshop</title>
+  <meta name="description" content="Algorithmic trading workshop: open each notebook in Google Colab, or try the interactive backtester. Nothing to install.">
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --card: #ffffff;
+      --text: #1b1f24;
+      --muted: #5c6670;
+      --border: #e2e6ea;
+      --accent: #e8710a;
+      --accent-text: #ffffff;
+      --highlight: #fff4e8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111418;
+        --card: #1a1f25;
+        --text: #e8ebee;
+        --muted: #9aa4ae;
+        --border: #2b323a;
+        --accent: #f28b2c;
+        --accent-text: #111418;
+        --highlight: #2a2116;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    main { max-width: 860px; margin: 0 auto; padding: 40px 16px 64px; }
+    h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 8px; }
+    h2 { font-size: 1.2rem; margin: 40px 0 12px; }
+    .byline { color: var(--muted); margin: 0 0 4px; }
+    .note { color: var(--muted); font-size: 0.9rem; margin: 0; }
+    ol { padding-left: 1.3em; margin: 0; }
+    ol li { margin: 4px 0; }
+    .grid { display: grid; gap: 12px; }
+    .card {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px;
+    }
+    .card.main { background: var(--highlight); border-color: var(--accent); }
+    .card h3 { margin: 0 0 2px; font-size: 1.05rem; }
+    .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .tag {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em;
+      color: var(--accent); margin-bottom: 4px;
+    }
+    a.button {
+      flex-shrink: 0; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+      background: var(--accent); color: var(--accent-text); padding: 9px 14px; border-radius: 8px; white-space: nowrap;
+    }
+    a.button:hover, a.button:focus-visible { filter: brightness(1.08); }
+    .links { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 0; margin: 0; list-style: none; }
+    .links a { color: var(--accent); font-weight: 600; }
+    footer { margin-top: 48px; color: var(--muted); font-size: 0.85rem; }
+    @media (max-width: 560px) {
+      h1 { font-size: 1.6rem; }
+      .card { flex-direction: column; align-items: stretch; }
+      a.button { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>QM FinTech Quant Workshop: Algorithmic Trading</h1>
+  <p class="byline">Led by <strong>Adnan Salehin</strong> (Lead SWE &amp; VP, JPMorgan) · Organised by <strong>QM FinTech Society</strong></p>
+  <p class="note">Educational use only — not financial advice. Price data from Yahoo Finance; no ownership is claimed.</p>
+
+  <h2>Start here: nothing to install</h2>
+  <ol>
+    <li>Click a notebook below. It opens in <strong>Google Colab</strong> in a new tab (you need a Google account).</li>
+    <li>If Colab warns that the notebook wasn't written by Google, click <strong>Run anyway</strong>.</li>
+    <li>Click <strong>File → Save a copy in Drive</strong>, so your changes are kept.</li>
+    <li>Run the first cell (<strong>▶ Setup</strong>), then work top to bottom with <strong>Shift + Enter</strong>.</li>
+  </ol>
+
+  <h2>Notebooks</h2>
+  <div class="grid">
+    <div class="card">
+      <div>
+        <h3>00 · What is algorithmic trading?</h3>
+        <p>The idea, how a strategy goes from idea to market, and key terms in one sentence each. 10–15 min.</p>
+      </div>
+      <a class="button" target="_blank" rel="noopener" href="https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/00_intro_to_algo_trading.ipynb">Open in Colab ↗</a>
+    </div>
+    <div class="card main">
+      <div>
+        <span class="tag">THE MAIN WORKSHOP</span>
+        <h3>01 · Your first strategy: moving-average crossover</h3>
+        <p>Data → signal → backtest → the classic mistakes that make backtests lie. About 60 min.</p>
+      </div>
+      <a class="button" target="_blank" rel="noopener" href="https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/01_workshop_ma_crossover.ipynb">Open in Colab ↗</a>
+    </div>
+    <div class="card">
+      <div>
+        <h3>02 · Mean reversion with RSI</h3>
+        <p>A second strategy that bets the opposite way: buy the dip, sell the rip.</p>
+      </div>
+      <a class="button" target="_blank" rel="noopener" href="https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/02_rsi_mean_reversion.ipynb">Open in Colab ↗</a>
+    </div>
+    <div class="card">
+      <div>
+        <h3>03 · The same strategy in a popular library</h3>
+        <p>The crossover rebuilt in backtesting.py, and why the numbers don't match exactly.</p>
+      </div>
+      <a class="button" target="_blank" rel="noopener" href="https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/03_compare_with_library.ipynb">Open in Colab ↗</a>
+    </div>
+  </div>
+
+  <h2>No code? Try the app</h2>
+  <div class="card">
+    <div>
+      <h3>Interactive backtester</h3>
+      <p>Pick a ticker and a strategy, move the sliders, and see the overfitting lab.</p>
+    </div>
+    <a class="button" target="_blank" rel="noopener" href="https://qmfintech-workshop.streamlit.app">Open the app ↗</a>
+  </div>
+
+  <h2>Keep going</h2>
+  <ul class="links">
+    <li><a target="_blank" rel="noopener" href="https://github.com/kolyamkl/qm-fintech-quant-workshop/blob/main/docs/glossary.md">Glossary ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://github.com/kolyamkl/qm-fintech-quant-workshop/blob/main/docs/resources.md">Exercises, reading list &amp; careers ↗</a></li>
+    <li><a target="_blank" rel="noopener" href="https://github.com/kolyamkl/qm-fintech-quant-workshop">All the code on GitHub ↗</a></li>
+  </ul>
+
+  <footer>Code: MIT licence · QM FinTech Society</footer>
+</main>
+</body>
+</html>
