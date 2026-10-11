@@ -3,7 +3,7 @@ from matplotlib.colors import to_hex
 from matplotlib.figure import Figure
 
 from backtester import run_backtest
-from backtester.plotting import plot_drawdown, plot_equity, plot_result, plot_signals
+from backtester.plotting import plot_drawdown, plot_equity, plot_heatmap, plot_result, plot_signals
 
 
 def make_result(make_prices, positions):
@@ -50,3 +50,12 @@ def test_trade_still_open_at_the_end_gets_no_exit_marker(make_prices):
     entries, exits = plot_signals(prices, result).axes[0].collections
     assert len(entries.get_offsets()) == 1
     assert len(exits.get_offsets()) == 0
+
+
+def test_heatmap_labels_each_filled_cell_and_outlines_the_highlight():
+    table = pd.DataFrame([[0.5, 1.0], [float("nan"), -0.2]], index=[10, 50], columns=[100, 200])
+    fig = plot_heatmap(table, "Sharpe", highlight=(10, 200))
+    ax = fig.axes[0]
+    assert sorted(text.get_text() for text in ax.texts) == ["-0.20", "0.50", "1.00"]  # NaN cell left blank
+    (outline,) = ax.patches
+    assert outline.get_xy() == (0.5, -0.5)  # column 200 is x=1, row 10 is y=0

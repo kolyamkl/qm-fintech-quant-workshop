@@ -50,3 +50,25 @@ def test_short_window_warns_that_annualised_numbers_are_unreliable():
     assert any("annualised" in caption.value for caption in at.caption)
     full = run_app()
     assert not any("annualised" in caption.value for caption in full.caption)
+
+
+def test_metrics_explain_themselves():
+    at = run_app()
+    assert all(metric.help for metric in at.metric)
+
+
+def test_overfitting_lab_compares_training_winner_with_test():
+    at = run_app()
+    assert [tab.label for tab in at.tabs] == ["📊 Backtest", "🎯 Overfitting lab"]
+    (summary,) = at.tabs[1].info
+    assert "best settings on 2016–2021" in summary.value
+    assert " of 38**" in summary.value  # 38 valid fast < slow pairs in the grid
+
+
+def test_overfitting_lab_still_shows_when_backtest_settings_are_invalid():
+    at = run_app()
+    at.sidebar.slider[0].set_value(100)
+    at.sidebar.slider[1].set_value(50)
+    at.run()
+    assert not at.exception
+    assert len(at.tabs[1].info) == 1

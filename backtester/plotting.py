@@ -4,7 +4,9 @@ Each function returns a matplotlib Figure. In a notebook, make it the last
 line of a cell to display it; in Streamlit, pass it to st.pyplot().
 """
 
+import pandas as pd
 from matplotlib.figure import Figure
+from matplotlib.patches import Rectangle
 
 from .metrics import drawdown_series
 
@@ -75,4 +77,31 @@ def plot_signals(prices, result, overlays=None, ax=None) -> Figure:
     ax.set_title("Price and trades")
     ax.legend()
     ax.grid(alpha=0.3)
+    return fig
+
+
+def plot_heatmap(table, title, highlight=None, vmin=None, vmax=None, ax=None) -> Figure:
+    """A coloured grid of one number (e.g. Sharpe) for every pair of settings.
+
+    table: DataFrame whose rows and columns are the two settings (e.g. fast x slow MA).
+           NaN cells (e.g. impossible pairs) stay blank.
+    highlight: optional (row, column) to outline, e.g. the best settings.
+    vmin / vmax: fix the colour scale, so two heatmaps can be compared fairly.
+    """
+    fig, ax = _figure_and_axes(ax, figsize=(6, 4.5))
+    image = ax.imshow(table.to_numpy(dtype=float), cmap="RdYlGn", vmin=vmin, vmax=vmax, aspect="auto")
+    ax.set_xticks(range(len(table.columns)), labels=table.columns)
+    ax.set_yticks(range(len(table.index)), labels=table.index)
+    ax.set_xlabel(table.columns.name or "")
+    ax.set_ylabel(table.index.name or "")
+    for i, row in enumerate(table.index):
+        for j, column in enumerate(table.columns):
+            value = table.loc[row, column]
+            if pd.notna(value):
+                ax.text(j, i, f"{value:.2f}", ha="center", va="center", fontsize=8)
+    if highlight is not None:
+        i, j = table.index.get_loc(highlight[0]), table.columns.get_loc(highlight[1])
+        ax.add_patch(Rectangle((j - 0.5, i - 0.5), 1, 1, fill=False, edgecolor="black", linewidth=2.5))
+    fig.colorbar(image, ax=ax)
+    ax.set_title(title)
     return fig
