@@ -30,7 +30,7 @@ Led by **Adnan Salehin** (Lead SWE & VP, JPMorgan) · Organised by **QM FinTech 
 | `01_workshop_ma_crossover` | **The main workshop**: data → signal → backtest → pitfalls | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/01_workshop_ma_crossover.ipynb) |
 | `02_rsi_mean_reversion` | A second strategy: buy the dip, sell the rip | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/02_rsi_mean_reversion.ipynb) |
 | `03_compare_with_library` | The same strategy in backtesting.py | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/03_compare_with_library.ipynb) |
-| `04_project_trading_dashboard` | **Take-home project:** build and publish your own trading dashboard ([details](projects/trading_dashboard/)) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/04_project_trading_dashboard.ipynb) |
+| `04_project_trading_dashboard` | **Take-home project:** build your own trading dashboard and run it on your computer ([details](projects/trading_dashboard/)) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/04_project_trading_dashboard.ipynb) |
 
 ## Workshop agenda (~1.5–2 hours)
 
