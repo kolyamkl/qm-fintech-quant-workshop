@@ -11,6 +11,8 @@
 
 Roughly easy → hard. Each builds on the code in this repo.
 
+**Looking for a bigger project?** Build and publish your own trading dashboard, step by step: notebook [`04_project_trading_dashboard`](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/04_project_trading_dashboard.ipynb).
+
 **Warm-up**
 1. Run the MA crossover on every ticker in the dataset (`backtester.available_tickers()`). Which does it work best on? Worst?
 2. Run the 5/20 crossover with 0 and 20 bps costs on QQQ. How much of the return do costs eat?

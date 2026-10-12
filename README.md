@@ -30,6 +30,7 @@ Led by **Adnan Salehin** (Lead SWE & VP, JPMorgan) · Organised by **QM FinTech 
 | `01_workshop_ma_crossover` | **The main workshop**: data → signal → backtest → pitfalls | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/01_workshop_ma_crossover.ipynb) |
 | `02_rsi_mean_reversion` | A second strategy: buy the dip, sell the rip | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/02_rsi_mean_reversion.ipynb) |
 | `03_compare_with_library` | The same strategy in backtesting.py | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/03_compare_with_library.ipynb) |
+| `04_project_trading_dashboard` | **Take-home project:** build and publish your own trading dashboard ([details](projects/trading_dashboard/)) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kolyamkl/qm-fintech-quant-workshop/blob/main/notebooks/04_project_trading_dashboard.ipynb) |
 
 ## Workshop agenda (~1.5–2 hours)
 
@@ -68,6 +69,7 @@ backtester/            the engine: data loading, run_backtest, metrics, charts
 strategies/            ma_crossover, rsi_mean_reversion, and template.py for your own
 notebooks/             the workshop, step by step
 app/streamlit_app.py   interactive backtester
+projects/trading_dashboard/   take-home project: starter app, self-checks, solution
 docs/index.html        the workshop page (GitHub Pages)
 docs/glossary.md       every term, explained in a sentence
 docs/resources.md      exercises, reading list, careers and interview prep
@@ -112,7 +114,7 @@ streamlit run app/streamlit_app.py  # opens the interactive app
 The hosted app runs on [Streamlit Community Cloud](https://streamlit.io/cloud) (free). With the repo pushed to GitHub:
 
 1. Sign in at [share.streamlit.io](https://share.streamlit.io) with the GitHub account that owns the repo.
-2. Click **New app** and choose repository `kolyamkl/qm-fintech-quant-workshop`, branch `main`, main file path `app/streamlit_app.py`.
+2. Click **Create app** and choose repository `kolyamkl/qm-fintech-quant-workshop`, branch `main`, main file path `app/streamlit_app.py`.
 3. Click **Deploy**. The live app is at <https://qmfintech-workshop.streamlit.app> and redeploys automatically on every push to `main`.
 
 After a push that changes `backtester/` or `strategies/`, click **Manage app → Reboot app** on the live site. Streamlit reloads `app/` by itself but keeps the old versions of those two folders in memory, so without a reboot the app can crash with an `ImportError`.
